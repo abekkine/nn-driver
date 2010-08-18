@@ -11,10 +11,12 @@ struct object_type {
 	unsigned int color;
 };
 
-struct object_type *objects;
-
 void object_init();
 void object_update();
+
+extern struct object_type *object_list;
+extern struct object_type *self;
+extern int object_num;
 
 #endif
 
