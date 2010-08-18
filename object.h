@@ -8,7 +8,7 @@ struct object_type {
 	double x;
 	double y;
 	double r;
-	unsigned int color;
+	int color;
 };
 
 void object_init();

@@ -11,7 +11,6 @@
 
 static config_t config;
 static config_setting_t *setting_cfg;
-static FILE *f_config;
 
 void configuration_dump()
 {

@@ -6,6 +6,7 @@
 #include "perception.h"
 #include "brain.h"
 #include "motion.h"
+#include "object.h"
 
 int main( int argc, char *argv[] )
 {
@@ -27,7 +28,7 @@ int main( int argc, char *argv[] )
 
 	display_init();
 
-	while( application_quit != 0 )
+	while( application_quit == 0 )
 	{
 		environment_update();
 		perception_update();
@@ -35,6 +36,7 @@ int main( int argc, char *argv[] )
 		motion_update();
 
 		display_update();
+		display_poll_events();
 
 		application_quit = display_check_quit();
 	}
