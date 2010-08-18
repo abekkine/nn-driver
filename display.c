@@ -1,3 +1,4 @@
+#include <math.h>
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <FTGL/ftgl.h>
@@ -254,15 +255,16 @@ void display_test_pattern()
 
 void display_object( double x, double y, double r, int color )
 {
+	double alpha;
 	float red, green, blue;
 
 	display_convert_color( color, &red, &green, &blue );
 
 	glColor3f( red, green, blue );
 
-	glPointSize( 2.0 );
-	glBegin( GL_POINTS );
-		glVertex2d( x, y );
-	glEnd();	
+	glBegin( GL_POLYGON );
+		for( alpha = 0.0; alpha < 2.0*M_PI; alpha += 0.2*M_PI )
+			glVertex2d( x + r*cos(alpha), y + r*sin(alpha) );
+	glEnd();
 }
 
