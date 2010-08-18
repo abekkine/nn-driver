@@ -1,0 +1,44 @@
+nndriver =
+{
+	// Screen properties.
+	display =
+	{
+		// Dimensions.
+		screen = 
+		{
+			width = 512;
+			height = 512;
+		};
+		// Background color.
+		background = 0x000000;
+	};
+
+	brain = 
+	{
+		// number of visual input cells.
+		num_visual = 16;
+		// number of hidden layer neurons.
+		num_hidden = 10;
+		// number of output layer, motion cells.
+		num_motion = 8;
+	};
+
+	environment =
+	{
+		// environment visibility.
+		visibility = 100.0;
+		// nndriver object coordinates and color.
+		self = { X = 0.0; Y = 0.0; R = 10.0; color = 0x0000c0; };
+		// positions and colors for other objects in environment.
+		objects = (
+			{ X = 10.0;	Y = 0.0;	R = 10.0; 	color = 0xff0000; },
+			{ X = 8.0; 	Y = 2.0; 	R = 10.0; 	color = 0xff0000; },
+			{ X = -4.0; 	Y = 5.0; 	R = 10.0;	color = 0x00ff00; },
+			{ X = 8.0; 	Y = 6.0; 	R = 10.0; 	color = 0x00ff00; }
+		);
+
+		// size of environment.
+		radius = 200.0;
+	};
+};
+
