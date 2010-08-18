@@ -28,13 +28,13 @@ nndriver =
 		// environment visibility.
 		visibility = 100.0;
 		// nndriver object coordinates and color.
-		self = { X = 0.0; Y = 0.0; R = 10.0; color = 0x0000c0; };
+		self = { X = 200.0; Y = 200.0; R = 10.0; color = 0x0080ff; };
 		// positions and colors for other objects in environment.
 		objects = (
-			{ X = 10.0;	Y = 0.0;	R = 10.0; 	color = 0xff0000; },
-			{ X = 8.0; 	Y = 2.0; 	R = 10.0; 	color = 0xff0000; },
-			{ X = -4.0; 	Y = 5.0; 	R = 10.0;	color = 0x00ff00; },
-			{ X = 8.0; 	Y = 6.0; 	R = 10.0; 	color = 0x00ff00; }
+			{ X = 110.0;	Y = 220.0;	R = 10.0; 	color = 0xff0000; },
+			{ X = 210.0; 	Y = 110.0; 	R = 10.0; 	color = 0xff0000; },
+			{ X = 315.0; 	Y = 95.0; 	R = 10.0;	color = 0x00ff00; },
+			{ X = 395.0; 	Y = 115.0; 	R = 10.0; 	color = 0x00ff00; }
 		);
 
 		// size of environment.

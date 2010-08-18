@@ -2,6 +2,7 @@
 #include <GL/gl.h>
 #include <FTGL/ftgl.h>
 
+#include "object.h"
 #include "display.h"
 
 // Global Variables
@@ -11,6 +12,7 @@ int display_bg_color;
 
 // Local Variables
 Uint8 *_keys;
+int _testing_mode_enabled;
 float _bg_red;
 float _bg_green;
 float _bg_blue;
@@ -28,9 +30,14 @@ void display_init()
 	display_select_font( "freemono.ttf", 16 );
 	display_init_screen( display_screen_width, display_screen_height );
 
-	_bg_red = ((display_bg_color & 0xff0000) >> 16) / 255.0;
-	_bg_green = ((display_bg_color & 0xff00) >> 8) / 255.0;
-	_bg_blue = (display_bg_color & 0xff) / 255.0;
+	display_convert_color( display_bg_color, &_bg_red, &_bg_green, &_bg_blue );
+}
+
+void display_convert_color( int rgb, float *r, float *g, float *b )
+{
+	*r = ((rgb & 0xff0000) >> 16) / 255.0;
+	*g = ((rgb & 0xff00) >> 8) / 255.0;
+	*b = (rgb & 0xff) / 255.0;
 }
 
 int display_init_screen()
@@ -82,16 +89,24 @@ void display_select_font( const char *font, int size )
 
 void display_update()
 {
+	display_render();
+	display_poll_events();
+	display_process_events();
+}
+
+void display_render()
+{
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	// TODO
-	glColor3f( 1.0, 1.0, 1.0 );
-	display_text( 20, 80, "NNDriver" );
-
-	glPointSize( 2.0 );
-	glBegin( GL_POINTS );
-		glVertex2i( 100, 100 );
-	glEnd();
+	if( _testing_mode_enabled )
+	{
+		display_test_pattern();
+	}
+	else
+	{
+		display_objects();
+	}
 
 	SDL_GL_SwapBuffers();
 }
@@ -193,5 +208,61 @@ void display_text( int x, int y, const char *str )
 		glRasterPos2i( x, y );
 		ftglRenderFont( _font, str, FTGL_RENDER_ALL );
 	}
+}
+
+int display_key_state( int state )
+{
+	static int state_history = 0;
+
+	state_history <<= 1;
+	state_history |= (state & 1);
+	state_history &= 3;
+
+	return state_history;
+}
+
+void display_process_events()
+{
+	_keys = SDL_GetKeyState( NULL );
+
+	if( display_key_state( _keys[ SDLK_t ] ) == KEY_UP_EVENT )	_testing_mode_enabled ^= 1;
+}
+
+void display_objects()
+{
+	int i;
+
+	glColor3f( 1.0, 1.0, 1.0 );
+	display_text( 20, 20, "Object Display" );
+
+	for( i=0; i<=object_num; i++ )
+	{
+		display_object( object_list[i].x, object_list[i].y, object_list[i].r, object_list[i].color );
+	}
+}
+
+void display_test_pattern()
+{
+	glColor3f( 1.0, 1.0, 1.0 );
+	display_text( 20, 20, "Test Pattern" );
+
+	glPointSize( 2.0 );
+	glBegin( GL_POINTS );
+		glVertex2d( 100.0, 100.0 );
+	glEnd();
+}
+
+void display_object( double x, double y, double r, int color )
+{
+	float red, green, blue;
+
+	display_convert_color( color, &red, &green, &blue );
+
+	glColor3f( red, green, blue );
+
+	glPointSize( 2.0 );
+	glBegin( GL_POINTS );
+		glVertex2d( x, y );
+	glEnd();	
 }
 

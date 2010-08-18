@@ -1,6 +1,11 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
+#define KEY_UP_STATE 0
+#define KEY_DOWN_EVENT 1
+#define KEY_UP_EVENT 2
+#define KEY_DOWN_STATE 3
+
 void display_init();
 void display_update();
 void display_select_font( const char *font, int size );
@@ -12,6 +17,12 @@ int display_init_screen();
 void display_reshape( int width, int height );
 int display_check_key( int key );
 void display_text( int x, int y, const char *str );
+void display_render();
+void display_process_events();
+void display_test_pattern();
+void display_objects();
+void display_object( double x, double y, double r, int color );
+void display_convert_color( int rgb, float *r, float *g, float *b );
 
 extern int display_screen_width;
 extern int display_screen_height;
