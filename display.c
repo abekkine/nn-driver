@@ -25,7 +25,7 @@ void display_init()
 {
 	_text_support = 0;
 
-	display_select_font( "freemono.ttf", 24 );
+	display_select_font( "freemono.ttf", 16 );
 	display_init_screen( display_screen_width, display_screen_height );
 
 	_bg_red = ((display_bg_color & 0xff0000) >> 16) / 255.0;
@@ -56,7 +56,11 @@ int display_init_screen()
 		{
 			if( 0 == display_init_font() )
 			{
-				_text_support = 0;
+				_text_support = 1;
+			}
+			else
+			{
+				fprintf( stderr, "Font cannot be initialized.\n" );
 			}
 
 			display_init_gl();
@@ -81,6 +85,9 @@ void display_update()
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	// TODO
+	glColor3f( 1.0, 1.0, 1.0 );
+	display_text( 20, 80, "NNDriver" );
+
 	glPointSize( 2.0 );
 	glBegin( GL_POINTS );
 		glVertex2i( 100, 100 );
@@ -177,5 +184,14 @@ int display_check_key( int key )
 	}
 
 	return result;
+}
+
+void display_text( int x, int y, const char *str )
+{
+	if( _text_support )
+	{
+		glRasterPos2i( x, y );
+		ftglRenderFont( _font, str, FTGL_RENDER_ALL );
+	}
 }
 
