@@ -22,17 +22,12 @@ int main( int argc, char *argv[] )
 	configuration_dump();
 
 	environment_init();
-	//DEBUG
-	printf( "self->x(%lf), self->y(%lf)\n", self->x, self->y );
 
 	perception_init();
 	brain_init();
 	motion_init();
 
 	display_init();
-
-	//DEBUG
-	printf( "self->x(%lf), self->y(%lf)\n", self->x, self->y );
 
 	while( application_quit == 0 )
 	{

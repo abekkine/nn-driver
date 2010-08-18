@@ -16,7 +16,7 @@ nndriver =
 	brain = 
 	{
 		// number of visual input cells.
-		num_visual = 16;
+		num_visual = 64;
 		// number of hidden layer neurons.
 		num_hidden = 10;
 		// number of output layer, motion cells.
@@ -34,7 +34,10 @@ nndriver =
 			{ X = 110.0;	Y = 220.0;	R = 8.0; 	color = 0xff0000; },
 			{ X = 210.0; 	Y = 110.0; 	R = 10.0; 	color = 0xff0000; },
 			{ X = 315.0; 	Y = 95.0; 	R = 12.0;	color = 0x00ff00; },
-			{ X = 395.0; 	Y = 115.0; 	R = 10.0; 	color = 0x00ff00; }
+			{ X = 395.0; 	Y = 115.0; 	R = 10.0; 	color = 0x00ff00; },
+			{ X = 115.0; 	Y = 65.0; 	R = 12.0;	color = 0x00ff00; },
+			{ X = 300.0; 	Y = 200.0;	R = 40.0;	color = 0x00ff00; },
+			{ X = 195.0; 	Y = 415.0; 	R = 10.0; 	color = 0x00ff00; }
 		);
 
 		// size of environment.
