@@ -8,10 +8,28 @@
 #include "perception.h"
 
 float *perception_retina;
+double perception_range_start;
+double perception_range_end;
+double perception_scan_step;
+
+double _search_range_start;
+double _search_range_end;
+double _search_range_step;
 
 void perception_init()
 {
 	perception_retina = malloc( 3 * sizeof( float ) * brain_num_visual );
+
+	_search_range_start = perception_range_start * self->r;
+	if( perception_range_end < perception_range_start )
+	{
+		_search_range_end = environment_visibility;
+	}
+	else
+	{
+		_search_range_end = perception_range_end * self->r;
+	}
+	_search_range_step = perception_scan_step;
 }
 
 void perception_update()
@@ -33,7 +51,7 @@ void perception_loop()
 		perception_retina[3*i+0] = 0.3;
 		perception_retina[3*i+1] = 0.3;
 		perception_retina[3*i+2] = 0.3;
-		for( search_range = 4.0 * self->r; search_range < environment_visibility; search_range += 10.0 )
+		for( search_range = _search_range_start; search_range < _search_range_end; search_range += _search_range_step )
 		{
 			search_x = self->x + search_range * cos( search_angle );
 			search_y = self->y + search_range * sin( search_angle );
