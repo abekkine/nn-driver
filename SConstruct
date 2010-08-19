@@ -16,6 +16,8 @@ env.Append( LINKFLAGS = [ '-g', '-Wall' ] )
 env.Append( LIBS = [ 'GL' ] )
 env.Append( LIBS = [ 'ftgl' ] )
 env.Append( LIBS = [ 'config' ] )
+env.Append( LIBS = [ 'fann' ] )
+env.Append( LIBS = [ 'm' ] )
 
 env.Program( target = 'nndriver', source = files )
 

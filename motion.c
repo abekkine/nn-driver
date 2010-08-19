@@ -1,6 +1,8 @@
 #include <stdlib.h>
 
+#include "object.h"
 #include "display.h"
+#include "brain.h"
 #include "motion.h"
 
 int motion_num_motion;
@@ -29,6 +31,38 @@ void motion_init()
 
 void motion_update()
 {
+	if( brain_in_training_mode() )
+	{
+		motion_compute_cell_values();
+	}
+	else if( brain_in_running_mode() )
+	{
+		motion_use_cell_values();
+	}
+	else
+	{
+		self->x = display_mouse_x;
+		self->y = display_mouse_y;
+	}
+}
+
+void motion_use_cell_values()
+{
+	int i;
+	_delta_x = (motion_cells[0] - motion_cells[2]);
+	_delta_y = (motion_cells[1] - motion_cells[3]);
+
+	self->x += _delta_x;
+	self->y += _delta_y;
+}
+
+void motion_compute_cell_values()
+{
+	// Update object by mouse.
+	self->x = display_mouse_x;
+	self->y = display_mouse_y;
+
+	// Update coordinate diffences.
 	_delta_x = display_mouse_x - _mouse_x_0;
 	_delta_y = display_mouse_y - _mouse_y_0;
 

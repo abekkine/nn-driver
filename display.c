@@ -4,6 +4,7 @@
 #include <FTGL/ftgl.h>
 
 #include "object.h"
+#include "brain.h"
 #include "motion.h"
 #include "perception.h"
 #include "display.h"
@@ -101,9 +102,6 @@ void display_update()
 {
 	display_render();
 	display_poll_events();
-
-	self->x = display_mouse_x;
-	self->y = display_mouse_y;
 }
 
 void display_render()
@@ -249,6 +247,18 @@ void display_keyevent( SDL_KeyboardEvent *key )
 
 			case SDLK_m:
 				_motion_ring_enabled ^= 1;
+				break;
+
+			case SDLK_z:
+				brain_set_mode( BRAIN_TRAINING_MODE );
+				break;
+
+			case SDLK_x:
+				brain_set_mode( BRAIN_RUNNING_MODE );
+				break;
+
+			case SDLK_c:
+				brain_set_mode( BRAIN_FREE_MODE );
 				break;
 
 			default:

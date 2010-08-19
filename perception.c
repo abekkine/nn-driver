@@ -48,9 +48,9 @@ void perception_loop()
 	for( i=0; i<perception_num_vision; i++ )
 	{
 		search_angle = 2.0 * i * M_PI / perception_num_vision;
-		perception_retina[3*i+0] = 0.3;
-		perception_retina[3*i+1] = 0.3;
-		perception_retina[3*i+2] = 0.3;
+		perception_retina[3*i+0] = 0.0;
+		perception_retina[3*i+1] = 0.0;
+		perception_retina[3*i+2] = 0.0;
 		for( search_range = _search_range_start; search_range < _search_range_end; search_range += _search_range_step )
 		{
 			search_x = self->x + search_range * cos( search_angle );
