@@ -13,6 +13,18 @@ nndriver =
 		background = 0x000000;
 	};
 
+	// Perception parameters.
+	perception = 
+	{
+		// Means 1.2 times self radius.
+		range_start = 1.2;
+		// Range <= range_start means end value is the environment visibility limit.
+		// Range > range_start means limit equals to range_end * self radius.
+		range_end = 0.0;
+		// Amount of range step.
+		range_step = 10.0;
+	};
+
 	brain = 
 	{
 		// number of visual input cells.
