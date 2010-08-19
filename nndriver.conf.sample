@@ -16,6 +16,8 @@ nndriver =
 	// Perception parameters.
 	perception = 
 	{
+		// Number of vision cells.
+		num_vision = 64;
 		// Means 1.2 times self radius.
 		range_start = 1.2;
 		// Range <= range_start means end value is the environment visibility limit.
@@ -28,18 +30,18 @@ nndriver =
 	// Motion parameters.
 	motion = 
 	{
+		// Number of motion cells.
+		num_motion = 4;
 		// Maximum movement step allowable in training input.
 		max_delta = 5.0;
 	};
 
 	brain = 
 	{
-		// number of visual input cells.
-		num_visual = 64;
-		// number of hidden layer neurons.
+		// Total number of layers.
+		num_layers = 5;
+		// number of neurons in one hidden layer.
 		num_hidden = 10;
-		// number of output layer, motion cells.
-		num_motion = 4;
 	};
 
 	environment =

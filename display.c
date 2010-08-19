@@ -5,7 +5,6 @@
 
 #include "object.h"
 #include "motion.h"
-#include "brain.h"
 #include "perception.h"
 #include "display.h"
 
@@ -333,9 +332,9 @@ void display_motion_ring()
 
 	glPointSize( 3.0 );
 	glBegin( GL_POINTS );
-	for( i=0; i<brain_num_motion; i++ )
+	for( i=0; i<motion_num_motion; i++ )
 	{
-		alpha = 2.0 * i * M_PI / brain_num_motion;
+		alpha = 2.0 * i * M_PI / motion_num_motion;
 		glColor3f( motion_cells[i], motion_cells[i], motion_cells[i] );
 		glVertex2d( self->x + scale*self->r*cos(alpha), self->y + scale*self->r*sin(alpha) );
 	}
@@ -350,9 +349,9 @@ void display_perception_ring()
 
 	glPointSize( 1.0 );
 	glBegin( GL_POINTS );
-	for( i=0; i<brain_num_visual; i++ )
+	for( i=0; i<perception_num_vision; i++ )
 	{
-		alpha = 2.0 * i * M_PI / brain_num_visual;
+		alpha = 2.0 * i * M_PI / perception_num_vision;
 		glColor3f( perception_retina[3*i+0], perception_retina[3*i+1], perception_retina[3*i+2] );
 		glVertex2d( self->x + scale*self->r*cos(alpha), self->y + scale*self->r*sin(alpha) );
 	}

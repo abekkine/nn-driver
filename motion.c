@@ -1,9 +1,9 @@
 #include <stdlib.h>
 
-#include "brain.h"
 #include "display.h"
 #include "motion.h"
 
+int motion_num_motion;
 float *motion_cells;
 double motion_max_delta;
 
@@ -19,8 +19,8 @@ void motion_init()
 	_mouse_x_0 = display_mouse_x;
 	_mouse_y_0 = display_mouse_y;
 
-	motion_cells = malloc( sizeof( float ) * brain_num_motion );
-	for( i=0; i<brain_num_motion; i++ )
+	motion_cells = malloc( sizeof( float ) * motion_num_motion );
+	for( i=0; i<motion_num_motion; i++ )
 	{
 		motion_cells[i] = 0.0;
 	}	

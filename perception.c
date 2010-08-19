@@ -4,10 +4,10 @@
 #include "object.h"
 #include "display.h"
 #include "environment.h"
-#include "brain.h"
 #include "perception.h"
 
 float *perception_retina;
+int perception_num_vision;
 double perception_range_start;
 double perception_range_end;
 double perception_scan_step;
@@ -18,7 +18,7 @@ double _search_range_step;
 
 void perception_init()
 {
-	perception_retina = malloc( 3 * sizeof( float ) * brain_num_visual );
+	perception_retina = malloc( 3 * sizeof( float ) * perception_num_vision );
 
 	_search_range_start = perception_range_start * self->r;
 	if( perception_range_end < perception_range_start )
@@ -45,9 +45,9 @@ void perception_loop()
 	unsigned int pixel_buffer;
 	float red, green, blue;
 
-	for( i=0; i<brain_num_visual; i++ )
+	for( i=0; i<perception_num_vision; i++ )
 	{
-		search_angle = 2.0 * i * M_PI / brain_num_visual;
+		search_angle = 2.0 * i * M_PI / perception_num_vision;
 		perception_retina[3*i+0] = 0.3;
 		perception_retina[3*i+1] = 0.3;
 		perception_retina[3*i+2] = 0.3;
