@@ -25,6 +25,7 @@ void display_objects();
 void display_object( double x, double y, double r, int color );
 void display_convert_color( int rgb, float *r, float *g, float *b );
 void display_perception_ring();
+void display_motion_ring();
 void display_keyevent( SDL_KeyboardEvent *key );
 void display_get_pixel_color( double x, double y, float *red, float *green, float *blue );
 unsigned int display_check_pixel( double x, double y );
@@ -33,6 +34,8 @@ void display_info();
 extern int display_screen_width;
 extern int display_screen_height;
 extern int display_bg_color;
+extern int display_mouse_x;
+extern int display_mouse_y;
 
 #endif
 

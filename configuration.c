@@ -5,6 +5,7 @@
 #include "definitions.h"
 #include "perception.h"
 #include "object.h"
+#include "motion.h"
 #include "display.h"
 #include "brain.h"
 #include "environment.h"
@@ -66,6 +67,12 @@ void configuration_read()
 			config_setting_lookup_float( setting_cfg, "range_start", &perception_range_start );
 			config_setting_lookup_float( setting_cfg, "range_end", &perception_range_end );
 			config_setting_lookup_float( setting_cfg, "range_step", &perception_scan_step );
+		}
+
+		setting_cfg = config_lookup( &config, "nndriver.motion" );
+		if( setting_cfg != NULL )
+		{
+			config_setting_lookup_float( setting_cfg, "max_delta", &motion_max_delta );
 		}
 
 		setting_cfg = config_lookup( &config, "nndriver.brain" );

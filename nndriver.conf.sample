@@ -25,6 +25,13 @@ nndriver =
 		range_step = 10.0;
 	};
 
+	// Motion parameters.
+	motion = 
+	{
+		// Maximum movement step allowable in training input.
+		max_delta = 5.0;
+	};
+
 	brain = 
 	{
 		// number of visual input cells.
@@ -32,7 +39,7 @@ nndriver =
 		// number of hidden layer neurons.
 		num_hidden = 10;
 		// number of output layer, motion cells.
-		num_motion = 8;
+		num_motion = 4;
 	};
 
 	environment =

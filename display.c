@@ -4,6 +4,7 @@
 #include <FTGL/ftgl.h>
 
 #include "object.h"
+#include "motion.h"
 #include "brain.h"
 #include "perception.h"
 #include "display.h"
@@ -12,13 +13,14 @@
 int display_screen_width;
 int display_screen_height;
 int display_bg_color;
+int display_mouse_x;
+int display_mouse_y;
 
 // Local Variables
 Uint8 *_keys;
-int _mouse_x;
-int _mouse_y;
 int _testing_mode_enabled;
 int _perception_ring_enabled;
+int _motion_ring_enabled;
 float _bg_red;
 float _bg_green;
 float _bg_blue;
@@ -34,6 +36,7 @@ void display_init()
 	_text_support = 0;
 	_testing_mode_enabled = 0;
 	_perception_ring_enabled = 1;
+	_motion_ring_enabled = 1;
 
 	display_select_font( "freemono.ttf", 16 );
 	display_init_screen( display_screen_width, display_screen_height );
@@ -100,8 +103,8 @@ void display_update()
 	display_render();
 	display_poll_events();
 
-	self->x = _mouse_x;
-	self->y = _mouse_y;
+	self->x = display_mouse_x;
+	self->y = display_mouse_y;
 }
 
 void display_render()
@@ -135,11 +138,11 @@ void display_info()
 		display_text( 20, 20, "Object Display" );
 	}
 
-	if( _perception_ring_enabled )
+	if( _perception_ring_enabled || _motion_ring_enabled )
 	{
 		char mouse_str[] = "X(0000) Y(0000)";
 		glColor3f( 1.0, 1.0, 1.0 );
-		sprintf( mouse_str, "X(%04d) Y(%04d)", _mouse_x, _mouse_y );
+		sprintf( mouse_str, "X(%04d) Y(%04d)", display_mouse_x, display_mouse_y );
 		display_text( 10, display_screen_height-20, mouse_str );
 	}
 }
@@ -222,8 +225,8 @@ int display_poll_events()
 				break;
 
 			case SDL_MOUSEMOTION:
-				_mouse_x = event.motion.x;
-				_mouse_y = event.motion.y;
+				display_mouse_x = event.motion.x;
+				display_mouse_y = event.motion.y;
 				break;
 		}
 	}
@@ -243,6 +246,10 @@ void display_keyevent( SDL_KeyboardEvent *key )
 
 			case SDLK_p:
 				_perception_ring_enabled ^= 1;
+				break;
+
+			case SDLK_m:
+				_motion_ring_enabled ^= 1;
 				break;
 
 			default:
@@ -288,6 +295,11 @@ void display_objects()
 	{
 		display_perception_ring();
 	}
+
+	if( _motion_ring_enabled )
+	{
+		display_motion_ring();
+	}
 }
 
 void display_test_pattern()
@@ -310,6 +322,23 @@ void display_object( double x, double y, double r, int color )
 	glBegin( GL_POLYGON );
 		for( alpha = 0.0; alpha < 2.0*M_PI; alpha += 0.1*M_PI )
 			glVertex2d( x + r*cos(alpha), y + r*sin(alpha) );
+	glEnd();
+}
+
+void display_motion_ring()
+{
+	int i;
+	double alpha;
+	double scale = 1.5;
+
+	glPointSize( 3.0 );
+	glBegin( GL_POINTS );
+	for( i=0; i<brain_num_motion; i++ )
+	{
+		alpha = 2.0 * i * M_PI / brain_num_motion;
+		glColor3f( motion_cells[i], motion_cells[i], motion_cells[i] );
+		glVertex2d( self->x + scale*self->r*cos(alpha), self->y + scale*self->r*sin(alpha) );
+	}
 	glEnd();
 }
 
