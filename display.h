@@ -30,6 +30,7 @@ void display_keyevent( SDL_KeyboardEvent *key );
 void display_get_pixel_color( double x, double y, float *red, float *green, float *blue );
 unsigned int display_check_pixel( double x, double y );
 void display_info();
+void display_add_info( double x, double y, const char *str, int *enable_flag );
 
 extern int display_screen_width;
 extern int display_screen_height;

@@ -18,7 +18,7 @@ int display_mouse_y;
 
 // Local Variables
 Uint8 *_keys;
-int _testing_mode_enabled;
+int _test_pattern_enable;
 int _perception_ring_enabled;
 int _motion_ring_enabled;
 float _bg_red;
@@ -28,13 +28,29 @@ int _text_support;
 char _font_name[256];
 int _font_size;
 FTGLfont *_font;
-
 SDL_Surface *_screen;
+
+struct _info_list_struct
+{
+	double x, y;
+	int *flag;
+	char *message;
+};
+
+int _info_mouse_pos_enable;
+char _info_mouse_pos_str[256];
+
+int _info_test_pattern_enable;
+char _info_test_pattern_str[256];
+
+unsigned char _info_list_index;
+struct _info_list_struct _info_list[256];
+
 
 void display_init()
 {
+	_info_list_index = 0;
 	_text_support = 0;
-	_testing_mode_enabled = 0;
 	_perception_ring_enabled = 1;
 	_motion_ring_enabled = 1;
 
@@ -42,6 +58,14 @@ void display_init()
 	display_init_screen( display_screen_width, display_screen_height );
 
 	display_convert_color( display_bg_color, &_bg_red, &_bg_green, &_bg_blue );
+
+	_test_pattern_enable = 0;
+	strcpy( _info_test_pattern_str, "Test Pattern Display" );
+	display_add_info( 10, 10, _info_test_pattern_str, &_test_pattern_enable );
+
+	_info_mouse_pos_enable = 1;
+	strcpy( _info_mouse_pos_str, "X(----) Y(----)" );
+	display_add_info( 10, display_screen_height-20, _info_mouse_pos_str, &_info_mouse_pos_enable );
 }
 
 void display_convert_color( int rgb, float *r, float *g, float *b )
@@ -98,8 +122,15 @@ void display_select_font( const char *font, int size )
 	_font_size = size;
 }
 
+void display_update_info()
+{
+	// Mouse coordinates.
+	sprintf( _info_mouse_pos_str, "X(%04d) Y(%04d)", display_mouse_x, display_mouse_y );
+}
+
 void display_update()
 {
+	display_update_info();
 	display_render();
 	display_poll_events();
 }
@@ -109,39 +140,30 @@ void display_render()
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	// TODO
-	if( _testing_mode_enabled )
+	if( _test_pattern_enable )
 	{
 		display_test_pattern();
 	}
 	else
 	{
 		display_objects();
+
+		_info_mouse_pos_enable = _perception_ring_enabled | _motion_ring_enabled;
+
+		if( _perception_ring_enabled )
+		{
+			display_perception_ring();
+		}
+
+		if( _motion_ring_enabled )
+		{
+			display_motion_ring();
+		}
 	}
 
 	display_info();
 
 	SDL_GL_SwapBuffers();
-}
-
-void display_info()
-{
-	glColor3f( 1.0, 1.0, 1.0 );
-	if( _testing_mode_enabled )
-	{
-		display_text( 20, 20, "Test Pattern" );
-	}
-	else 
-	{
-		display_text( 20, 20, "Object Display" );
-	}
-
-	if( _perception_ring_enabled || _motion_ring_enabled )
-	{
-		char mouse_str[] = "X(0000) Y(0000)";
-		glColor3f( 1.0, 1.0, 1.0 );
-		sprintf( mouse_str, "X(%04d) Y(%04d)", display_mouse_x, display_mouse_y );
-		display_text( 10, display_screen_height-20, mouse_str );
-	}
 }
 
 int display_check_quit()
@@ -238,7 +260,7 @@ void display_keyevent( SDL_KeyboardEvent *key )
 		switch( key->keysym.sym )
 		{
 			case SDLK_t:
-				_testing_mode_enabled ^= 1;
+				_test_pattern_enable ^= 1;
 				break;
 
 			case SDLK_p:
@@ -299,16 +321,6 @@ void display_objects()
 	}
 
 	perception_loop();
-
-	if( _perception_ring_enabled )
-	{
-		display_perception_ring();
-	}
-
-	if( _motion_ring_enabled )
-	{
-		display_motion_ring();
-	}
 }
 
 void display_test_pattern()
@@ -388,3 +400,27 @@ unsigned int display_check_pixel( double x, double y )
 	return buffer;
 }
 
+void display_info()
+{
+	int i;
+	glColor3f( 1.0, 1.0, 1.0 );
+	for( i=0; i<_info_list_index; i++ )
+	{
+		if( _info_list[i].flag[0] )
+		{
+			display_text( _info_list[i].x, _info_list[i].y, _info_list[i].message );
+		}
+	}
+}
+
+void display_add_info( double x, double y, const char *str, int *enable_flag )
+{
+	if( _info_list_index < 255 )
+	{
+		_info_list[_info_list_index].x = x;
+		_info_list[_info_list_index].y = y;
+		_info_list[_info_list_index].message = str;
+		_info_list[_info_list_index].flag = enable_flag;
+		_info_list_index++; 
+	}
+}

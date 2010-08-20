@@ -48,7 +48,6 @@ void motion_update()
 
 void motion_use_cell_values()
 {
-	int i;
 	_delta_x = (motion_cells[0] - motion_cells[2]);
 	_delta_y = (motion_cells[1] - motion_cells[3]);
 
