@@ -11,6 +11,7 @@ files = Glob( '*.c' )
 
 env.Append( CPPPATH = [ '/usr/include/freetype2' ] )
 env.Append( CPPFLAGS = [ '-Wall' ] )
+env.Append( CPPFLAGS = [ '-Werror' ] )
 env.Append( CPPFLAGS = [ '-g' ] )
 env.Append( LINKFLAGS = [ '-g', '-Wall' ] )
 env.Append( LIBS = [ 'GL' ] )

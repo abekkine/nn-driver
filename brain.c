@@ -1,19 +1,24 @@
+#include <string.h>
 #include <stdlib.h>
 #include <fann.h>
 
+#include "display.h"
 #include "perception.h"
 #include "motion.h"
 #include "brain.h"
 
 int brain_num_layers;
 int brain_num_hidden;
+int brain_display_mode_enable;
 
+int _brain_mode;
 int _num_input;
 int _num_output;
 struct fann *_ann;
 fann_type *_output_array;
-int _training_mode;
-int _running_mode;
+
+char _info_brain_mode_str[256];
+char *_brain_mode_str_list[3]= { "Training Mode", "Running Mode", "Free Mode" };
 
 void brain_init()
 {
@@ -37,52 +42,43 @@ void brain_init()
 	fann_set_activation_function_hidden( _ann, FANN_SIGMOID_SYMMETRIC );
 	fann_set_activation_function_output( _ann, FANN_SIGMOID_SYMMETRIC );
 	fann_set_training_algorithm( _ann, FANN_TRAIN_INCREMENTAL );
+	fann_randomize_weights( _ann, 0.0, 1.0 );
 
-	_training_mode = 1;
-	_running_mode = 0;
-}
+	brain_display_mode_enable = 1;
+	strcpy( _info_brain_mode_str, "Free Mode" );
+	display_add_info( 250, 20, _info_brain_mode_str, &brain_display_mode_enable );
 
-int brain_in_running_mode()
-{
-	return _running_mode;
-}
-
-int brain_in_training_mode()
-{
-	return _training_mode;
+	brain_set_mode( BRAIN_FREE_MODE );
 }
 
 void brain_update()
 {
-	if( _training_mode )
+	switch( _brain_mode )
 	{
-		brain_train();
+		case BRAIN_RUNNING_MODE:
+			brain_run();
+			break;
+
+		case BRAIN_TRAINING_MODE:
+			brain_train();
+			break;
+
+		case BRAIN_FREE_MODE:
+		default:
+			break;
 	}
-	else if( _running_mode )
-	{
-		brain_run();
-	}
+}
+
+int brain_get_mode()
+{
+	return _brain_mode;
 }
 
 void brain_set_mode( int mode )
 {
-	switch( mode )
-	{
-		case BRAIN_TRAINING_MODE:
-			_training_mode = 1;
-			_running_mode = 0;
-			break;
-
-		case BRAIN_RUNNING_MODE:
-			_training_mode = 0;
-			_running_mode = 1;
-			break;
-
-		case BRAIN_FREE_MODE:
-			_training_mode = 0;
-			_running_mode = 0;
-			break;
-	}
+	_brain_mode = mode;
+	strcpy( _info_brain_mode_str, _brain_mode_str_list[mode] );	
+	motion_reset_cell_values();
 }
 
 void brain_train()
@@ -93,12 +89,14 @@ void brain_train()
 void brain_run()
 {
 	int i;
+
+	motion_reset_cell_values();
+
 	_output_array = fann_run( _ann, (fann_type *) perception_retina );
 
 	for( i=0; i<_num_output; i++ )
 	{
 		motion_cells[i] = (float) _output_array[i];
 	}
-
 }
 

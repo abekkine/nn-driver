@@ -34,7 +34,7 @@ struct _info_list_struct
 {
 	double x, y;
 	int *flag;
-	char *message;
+	const char *message;
 };
 
 int _info_mouse_pos_enable;
@@ -43,13 +43,12 @@ char _info_mouse_pos_str[256];
 int _info_test_pattern_enable;
 char _info_test_pattern_str[256];
 
-unsigned char _info_list_index;
+unsigned char _info_list_index = 0;
 struct _info_list_struct _info_list[256];
 
 
 void display_init()
 {
-	_info_list_index = 0;
 	_text_support = 0;
 	_perception_ring_enabled = 1;
 	_motion_ring_enabled = 1;
@@ -126,6 +125,8 @@ void display_update_info()
 {
 	// Mouse coordinates.
 	sprintf( _info_mouse_pos_str, "X(%04d) Y(%04d)", display_mouse_x, display_mouse_y );
+
+	// Brain Mode
 }
 
 void display_update()
@@ -259,6 +260,10 @@ void display_keyevent( SDL_KeyboardEvent *key )
 	{
 		switch( key->keysym.sym )
 		{
+			case SDLK_a:
+				motion_mouse_move_enable ^= 1;
+				break;
+
 			case SDLK_t:
 				_test_pattern_enable ^= 1;
 				break;

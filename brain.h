@@ -8,10 +8,10 @@
 void brain_init();
 void brain_update();
 void brain_set_mode( int mode );
+int brain_get_mode();
 void brain_train();
 void brain_run();
-int brain_in_running_mode();
-int brain_in_training_mode();
+
 
 extern int brain_num_hidden;
 extern int brain_num_layers;
