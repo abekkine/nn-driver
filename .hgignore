@@ -5,4 +5,4 @@ nndriver.conf
 *.o
 .sconsign.dblite
 nndriver
-
+*.net
