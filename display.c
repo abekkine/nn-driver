@@ -336,10 +336,11 @@ void display_objects()
 {
 	int i;
 
-	for( i=0; i<=object_num; i++ )
+	for( i=1; i<=object_num; i++ )
 	{
 		display_object( object_list[i].x, object_list[i].y, object_list[i].r, object_list[i].color );
 	}
+	display_object( object_list[0].x, object_list[0].y, object_list[0].r, object_list[0].color );
 
 	perception_loop();
 }
