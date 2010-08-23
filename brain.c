@@ -17,6 +17,8 @@ int _num_input;
 int _num_output;
 struct fann *_ann;
 fann_type *_output_array;
+int _brain_num_connections;
+struct fann_connection *_brain_connections;
 
 char _info_brain_mode_str[256];
 char *_brain_mode_str_list[3]= { "Training Mode", "Running Mode", "Free Mode" };
@@ -46,6 +48,13 @@ void brain_init()
 	fann_set_activation_function_output( _ann, FANN_SIGMOID_SYMMETRIC );
 	fann_set_training_algorithm( _ann, FANN_TRAIN_INCREMENTAL );
 	fann_randomize_weights( _ann, 0.0, 1.0 );
+
+	// Allocate connections array.
+	_brain_num_connections = fann_get_total_connections( _ann );
+	_brain_connections = malloc( sizeof( struct fann_connection ) * _brain_num_connections );
+	//DEBUG
+	printf( "_brain_num_connections(%d)\n", _brain_num_connections );
+	//END
 
 	// Brain save file name
 	sprintf( _brain_save_file, "brain_float_%03d.net", _brain_save_file_index );
@@ -92,6 +101,9 @@ void brain_set_mode( int mode )
 void brain_train()
 {
 	fann_train( _ann, (fann_type *) perception_retina, (fann_type *) motion_cells );
+
+	//DEBUG
+	brain_get_connections();
 }
 
 void brain_run()
@@ -106,6 +118,35 @@ void brain_run()
 	{
 		motion_cells[i] = (float) _output_array[i];
 	}
+}
+
+void brain_get_connections()
+{
+	int i;
+	struct fann_connection min_weight;
+	struct fann_connection max_weight;
+
+	fann_get_connection_array( _ann, _brain_connections );
+
+	//DEBUG
+	min_weight.weight = 1000000000.0;
+	max_weight.weight = -1000000000.0;
+	for( i=0; i<_brain_num_connections; i++ )
+	{
+		if( _brain_connections[i].weight < min_weight.weight )
+		{
+			min_weight = _brain_connections[i];
+		}
+		else if( _brain_connections[i].weight > max_weight.weight )
+		{
+			max_weight = _brain_connections[i];
+		}	
+	}
+
+	printf( "MIN MAX\n" );
+	printf( "%lf %lf\n", min_weight.weight, max_weight.weight );
+	printf( "%d %d\n", min_weight.from_neuron, max_weight.from_neuron );
+	printf( "%d %d\n", min_weight.to_neuron, max_weight.to_neuron );
 }
 
 void brain_next_save_file()

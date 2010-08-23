@@ -11,6 +11,7 @@ void brain_set_mode( int mode );
 int brain_get_mode();
 void brain_train();
 void brain_run();
+void brain_get_connections();
 void brain_next_save_file();
 void brain_prev_save_file();
 void brain_save();
