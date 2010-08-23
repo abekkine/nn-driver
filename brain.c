@@ -47,7 +47,7 @@ void brain_init()
 	fann_set_activation_function_hidden( _ann, FANN_SIGMOID_SYMMETRIC );
 	fann_set_activation_function_output( _ann, FANN_SIGMOID_SYMMETRIC );
 	fann_set_training_algorithm( _ann, FANN_TRAIN_INCREMENTAL );
-	fann_randomize_weights( _ann, 0.0, 1.0 );
+	//fann_randomize_weights( _ann, 0.0, 1.0 );
 
 	// Allocate connections array.
 	_brain_num_connections = fann_get_total_connections( _ann );
