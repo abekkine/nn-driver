@@ -18,6 +18,7 @@ void brain_load();
 
 extern int brain_num_hidden;
 extern int brain_num_layers;
+extern int brain_display_mode_enable;
 extern int brain_display_save_file;
 
 #endif
