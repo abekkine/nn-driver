@@ -11,10 +11,14 @@ void brain_set_mode( int mode );
 int brain_get_mode();
 void brain_train();
 void brain_run();
-
+void brain_next_save_file();
+void brain_prev_save_file();
+void brain_save();
+void brain_load();
 
 extern int brain_num_hidden;
 extern int brain_num_layers;
+extern int brain_display_save_file;
 
 #endif
 

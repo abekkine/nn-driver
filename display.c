@@ -288,6 +288,22 @@ void display_keyevent( SDL_KeyboardEvent *key )
 				brain_set_mode( BRAIN_FREE_MODE );
 				break;
 
+			case SDLK_RIGHT:
+				brain_next_save_file();
+				break;
+
+			case SDLK_LEFT:
+				brain_prev_save_file();
+				break;
+
+			case SDLK_s:
+				brain_save();
+				break;
+
+			case SDLK_l:
+				brain_load();
+				break;
+
 			default:
 				break;
 		}

@@ -10,6 +10,7 @@
 int brain_num_layers;
 int brain_num_hidden;
 int brain_display_mode_enable;
+int brain_display_save_file;
 
 int _brain_mode;
 int _num_input;
@@ -19,6 +20,8 @@ fann_type *_output_array;
 
 char _info_brain_mode_str[256];
 char *_brain_mode_str_list[3]= { "Training Mode", "Running Mode", "Free Mode" };
+char _brain_save_file[] = "brain_float_000.net";
+int _brain_save_file_index = 0;
 
 void brain_init()
 {
@@ -43,6 +46,11 @@ void brain_init()
 	fann_set_activation_function_output( _ann, FANN_SIGMOID_SYMMETRIC );
 	fann_set_training_algorithm( _ann, FANN_TRAIN_INCREMENTAL );
 	fann_randomize_weights( _ann, 0.0, 1.0 );
+
+	// Brain save file name
+	sprintf( _brain_save_file, "brain_float_%03d.net", _brain_save_file_index );
+	brain_display_save_file = 1;
+	display_add_info( 10, 472, _brain_save_file, &brain_display_save_file );
 
 	brain_display_mode_enable = 1;
 	strcpy( _info_brain_mode_str, "Free Mode" );
@@ -100,3 +108,31 @@ void brain_run()
 	}
 }
 
+void brain_next_save_file()
+{
+	_brain_save_file_index++;
+	_brain_save_file_index %= 100;
+
+	sprintf( _brain_save_file, "brain_float_%03d.net", _brain_save_file_index );
+}
+
+void brain_prev_save_file()
+{
+	_brain_save_file_index--;
+	if( _brain_save_file_index < 0 )
+		_brain_save_file_index = 99;
+
+	sprintf( _brain_save_file, "brain_float_%03d.net", _brain_save_file_index );
+}
+
+void brain_save()
+{
+	fann_save( _ann, _brain_save_file );
+}
+
+void brain_load()
+{
+	fann_destroy( _ann );
+
+	_ann = fann_create_from_file( _brain_save_file );
+}
