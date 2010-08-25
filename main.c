@@ -12,6 +12,8 @@ int main( int argc, char *argv[] )
 {
 	int application_quit = 0;
 
+	configuration_get_options( argc, argv );
+
 	puts( "NNDriver Application Begin" );
 
 	configuration_init();

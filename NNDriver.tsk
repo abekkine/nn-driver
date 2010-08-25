@@ -1,13 +1,16 @@
 <?xml version="1.0" ?>
 <?taskcoach release="1.1.0" tskversion="30"?>
 <tasks>
-<task id="174378124:1282661432.92" startdate="2010-08-24 17:50:00" status="1" subject="Configuration file should be specified as command line argument."/>
+<task id="174444588:1282661539.35" startdate="2010-08-24 17:52:00" status="1" subject="Filename display should be styled to indicate file existence."/>
+<task id="165291596:1282713850.4" startdate="2010-08-25 08:24:00" status="1" subject="A window should be provided to monitor neural connections."/>
+<task completiondate="2010-08-25 11:04:27.546602" id="174378124:1282661432.92" percentageComplete="100" startdate="2010-08-24 17:50:00" status="1" subject="Configuration file should be specified as command line argument.">
+<effort id="175910508:1282713909.68" start="2010-08-25 08:25:09" status="1" stop="2010-08-25 08:54:06"/>
+</task>
 <task id="174468940:1282661347.82" startdate="2010-08-24 17:49:00" status="1" subject="Trajectory Display for Moving Object">
 <description>
 Trajectory of self moving should be visualized.
 </description>
 </task>
-<task id="174444588:1282661539.35" startdate="2010-08-24 17:52:00" status="1" subject="Filename display should be styled to indicate file existence."/>
 <syncmlconfig>
 <TaskCoach-0000012aa4922c860ada2f39007f000000010001>
 <spds>

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <libconfig.h>
 
 #include "definitions.h"
@@ -13,6 +14,9 @@
 
 static config_t config;
 static config_setting_t *setting_cfg;
+static char *_configuration_filename;
+static char _configuration_default_filename[] = "nndriver.conf";
+
 
 void configuration_dump()
 {
@@ -46,7 +50,7 @@ void configuration_init()
 
 void configuration_read()
 {
-	if( config_read_file( &config, "nndriver.conf" ) )
+	if( config_read_file( &config, _configuration_filename ) )
 	{
 		setting_cfg = config_lookup( &config, "nndriver.display" );
 		if( setting_cfg != NULL )
@@ -130,3 +134,38 @@ void configuration_read()
 		exit( ERR_CONFIG_FILE_ERROR );
 	}
 }
+
+void configuration_get_options( int argc, char **argv )
+{
+	int c;
+
+	while( (c = getopt( argc, argv, "f:" )) != -1 )
+	{
+		switch( c )
+		{
+			case 'f':
+				_configuration_filename = optarg;
+				break;
+
+			case '?':
+				if( optopt == 'f' )
+				{
+					fprintf( stderr, "Option '-%c' requires a filename to be specified.\n", optopt );
+				}
+				else if( isprint( optopt ) )
+				{
+					fprintf( stderr, "Unknown option: '-%c'.\n", optopt );
+				}
+				else
+				{
+					fprintf( stderr, "Unknown option character: '\\x%x'.\n", optopt );
+				}
+				exit( 1 );
+
+			default:
+				_configuration_filename = _configuration_default_filename;
+				break;
+		}
+	}
+}
+
