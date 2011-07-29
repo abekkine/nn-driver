@@ -1,8 +1,9 @@
 syntax: glob
 
 .svn
-nndriver.conf
+*.conf
 *.o
 .sconsign.dblite
 nndriver
 *.net
+*.conf
