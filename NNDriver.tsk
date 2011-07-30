@@ -1,30 +1,6 @@
-<?xml version="1.0" ?>
-<?taskcoach release="1.1.0" tskversion="30"?>
+<?xml version="1.0" encoding="utf-8"?>
+<?taskcoach release="1.2.24" tskversion="33"?>
 <tasks>
-<task expandedContexts="('taskviewer',)" id="155367532:1282756848.02" startdate="2010-08-25 20:20:00" status="1" subject="New Sensors should be defined.">
-<task id="158736524:1282759143.98" startdate="2010-08-25 20:59:00" status="1" subject="Proximity Sensors should be defined.">
-<description>
-Proximity or touching sensors for sensing physical boundaries of surrounding objects should be defined.
-
-</description>
-</task>
-<task id="158762476:1282759196.71" startdate="2010-08-25 20:59:00" status="1" subject="Self Energy Sensor should be defined."/>
-<task id="158643756:1282759226.47" startdate="2010-08-25 21:00:00" status="1" subject="Motion Sensor should be added."/>
-<task id="158762796:1282759702.54" startdate="2010-08-25 21:08:00" status="1" subject="Smell Sensor should be added."/>
-<task id="155328716:1282759712.02" startdate="2010-08-25 21:08:00" status="1" subject="Hearing Sensor should be added."/>
-<task id="161006892:1282759817.45" startdate="2010-08-25 21:10:00" status="1" subject="Temperature sensor should be added."/>
-<task id="155335308:1282759964.57" startdate="2010-08-25 21:12:00" status="1" subject="Pain Sensor should be defined."/>
-</task>
-<task id="174468940:1282661347.82" startdate="2010-08-24 17:49:00" status="1" subject="Trajectory Display for Moving Object">
-<description>
-Trajectory of self moving should be visualized.
-</description>
-</task>
-<task id="174378124:1282661432.92" startdate="2010-08-24 17:50:00" status="1" subject="Configuration file should be specified as command line argument.">
-<effort id="175910508:1282713909.68" start="2010-08-25 08:25:09" status="1" stop="2010-08-25 08:54:06"/>
-</task>
-<task id="158580780:1282756862.22" startdate="2010-08-25 20:21:00" status="1" subject="New Actions should be defined."/>
-<task id="165291596:1282713850.4" startdate="2010-08-25 08:24:00" status="1" subject="A window should be provided to monitor neural connections."/>
 <task expandedContexts="('taskviewer',)" id="155295980:1282756903.57" startdate="2010-08-25 20:21:00" status="1" subject="New Features for Self should be defined.">
 <task id="158536748:1282756923.6" startdate="2010-08-25 20:22:00" status="1" subject="Self Energy feature should be defined.">
 <description>
@@ -39,11 +15,37 @@ Low enery should result in lower learning rate and momentum.
 </description>
 </task>
 </task>
-<task id="174444588:1282661539.35" startdate="2010-08-24 17:52:00" status="1" subject="Filename display should be styled to indicate file existence."/>
-<task expandedContexts="('taskviewer',)" id="147342860:1282756544.56" startdate="2010-08-25 20:15:00" status="1" subject="All objects should be movable by mouse.">
+<task id="158580780:1282756862.22" startdate="2010-08-25 20:21:00" status="1" subject="New Actions should be defined."/>
+<task id="174378124:1282661432.92" startdate="2010-08-24 17:50:00" status="1" subject="Configuration file should be specified as command line argument.">
+<effort id="175910508:1282713909.68" start="2010-08-25 08:25:09" status="1" stop="2010-08-25 08:54:06"/>
+</task>
+<task id="165291596:1282713850.4" startdate="2010-08-25 08:24:00" status="1" subject="A window should be provided to monitor neural connections."/>
+<task id="b3bdb994-ba71-11e0-8ca0-485d6095e6ad" startdate="2011-07-30 09:03:00" status="1" subject="It should be checked if output forces during training are fed into network correctly."/>
+<task id="174468940:1282661347.82" startdate="2010-08-24 17:49:00" status="1" subject="Trajectory Display for Moving Object">
+<description>
+Trajectory of self moving should be visualized.
+</description>
+</task>
+<task id="147342860:1282756544.56" startdate="2010-08-25 20:15:00" status="1" subject="All objects should be movable by mouse.">
 <task id="147468140:1282756637.69" startdate="2010-08-25 20:17:00" status="1" subject="Edit mode should be implemented to change object positions."/>
 <task id="155293964:1282756660.86" startdate="2010-08-25 20:17:00" status="1" subject="Object colors should be changed in Edit Mode."/>
 <task id="155275692:1282756758.39" startdate="2010-08-25 20:19:00" status="1" subject="Changes should be saved in configuration file."/>
+</task>
+<task id="4452b9ec-ba71-11e0-8ca0-485d6095e6ad" startdate="2011-07-30 09:00:00" status="1" subject="When configuration file is not specified from command line, a default one must be assumed."/>
+<task id="174444588:1282661539.35" startdate="2010-08-24 17:52:00" status="1" subject="Filename display should be styled to indicate file existence."/>
+<task id="155367532:1282756848.02" startdate="2010-08-25 20:20:00" status="1" subject="New Sensors should be defined.">
+<task id="158736524:1282759143.98" startdate="2010-08-25 20:59:00" status="1" subject="Proximity Sensors should be defined.">
+<description>
+Proximity or touching sensors for sensing physical boundaries of surrounding objects should be defined.
+
+</description>
+</task>
+<task id="158762476:1282759196.71" startdate="2010-08-25 20:59:00" status="1" subject="Self Energy Sensor should be defined."/>
+<task id="158643756:1282759226.47" startdate="2010-08-25 21:00:00" status="1" subject="Motion Sensor should be added."/>
+<task id="158762796:1282759702.54" startdate="2010-08-25 21:08:00" status="1" subject="Smell Sensor should be added."/>
+<task id="155328716:1282759712.02" startdate="2010-08-25 21:08:00" status="1" subject="Hearing Sensor should be added."/>
+<task id="161006892:1282759817.45" startdate="2010-08-25 21:10:00" status="1" subject="Temperature sensor should be added."/>
+<task id="155335308:1282759964.57" startdate="2010-08-25 21:12:00" status="1" subject="Pain Sensor should be defined."/>
 </task>
 <syncmlconfig>
 <TaskCoach-0000012aa4922c860ada2f39007f000000010001>
